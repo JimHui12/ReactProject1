@@ -21,6 +21,16 @@ export default class WeatherChannel extends Component {
                 //{weekday:'Thu', icon: 'http://icons.wxug.com/i/c/k/partlycloudy.gif', high:28, low: 15}
             ]
         }
+        this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleOnClick = this.handleOnClick.bind(this);
+    }
+
+    handleOnChange(event) {
+        this.setState({curCity: event.target.value});
+    }
+
+    handleOnClick(event) {
+      
     }
 
     handleConditionData(data) {
