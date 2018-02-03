@@ -25,12 +25,12 @@ export default class WeatherChannel extends Component {
         this.handleOnClick = this.handleOnClick.bind(this);
     }
 
-    handleOnChange(event) {
-        this.setState({curCity: event.target.value});
+    handleOnChange(data) {
+        this.setState({conditionData:data});
     }
 
-    handleOnClick(event) {
-      
+    handleOnClick(data) {
+        this.setState({forecast:data});      
     }
 
     handleConditionData(data) {
