@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import axios from 'axios';
 import CityCondition from './CityCondition';
 import Forecast from './Forecast';
 
@@ -21,16 +21,18 @@ export default class WeatherChannel extends Component {
                 //{weekday:'Thu', icon: 'http://icons.wxug.com/i/c/k/partlycloudy.gif', high:28, low: 15}
             ]
         }
-        this.handleOnChange = this.handleOnChange.bind(this);
-        this.handleOnClick = this.handleOnClick.bind(this);
+        //this.handleOnChange = this.handleOnChange.bind(this);
+        //this.handleOnClick = this.handleOnClick.bind(this);
+        this.handleConditionData = this.handleConditionData.bind(this);
+        this.handleForestCastData = this.handleForestCastData.bind(this);
     }
 
-    handleOnChange(data) {
-        this.setState({conditionData:data});
-    }
-
-    handleOnClick(data) {
-        this.setState({forecast:data});      
+    onSubmit() {
+        //alert('clicked');
+        fetchConditionData(this.state.curCity)
+        .then(this.handleConditionData);
+        fetchForecast(this.state.curCity)
+        .then(this.handleForecastData)     
     }
 
     handleConditionData(data) {
@@ -60,9 +62,12 @@ export default class WeatherChannel extends Component {
         this.setState({forecast:forecastData});
 
     }
+    
     componentDidMount() {
-        fetchConditionData(this.state.curCity, (data) => this.handleConditionData(data));
-        fetchForecast(this.state.curCity, (data1) => this.handleForestCastData(data1))
+        fetchConditionData(this.state.curCity).then(this.handleConditionData);
+        //fetchConditionData(this.state.curCity, (data) => this.handleConditionData(data))
+        fetchForecast(this.state.curCity).then(this.handleForestCastData);
+       
     }
 
     render() {
@@ -72,8 +77,8 @@ export default class WeatherChannel extends Component {
             <main>
                 <nav style={{padding:10}}>
                     <input value={this.state.curCity} 
-                    onChange={(e) => this.setState({curCity:e.target.value})} />
-                    <button onClick={() => alert(this.state.curCity)}>Load</button>
+                        onChange={(e) => this.setState({curCity:e.target.value})} />
+                    <button onClick={() => {this.onSubmit() } }>Load</button>
                 </nav>
                 <section id="left">  
                     <CityCondition 

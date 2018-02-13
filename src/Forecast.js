@@ -13,5 +13,8 @@ function DailyItem(props) {
 }
 
 export default function Forecast(props){
+    <section>
+        {}
+    </section>    
 return props.forecast.map ((day, i) => <DailyItem key={i} day={day} />)               
 }
